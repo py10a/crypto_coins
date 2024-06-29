@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:crypto_coins_app/repositories/coins/coins_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -23,7 +25,7 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
 
     final coinMap = args as Map;
     coinName = coinMap['coin_name'];
-    coinPrice = coinMap['coin_price'].toString();
+    coinPrice = coinMap['coin_prices'].toString();
   }
 
   @override
@@ -32,28 +34,26 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(coinName),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(22),
-        )),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/svg/bitcoin_logo.svg',
-              width: 128,
-              height: 128,
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Bitcoin',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
-            ),
-            const SizedBox(height: 16),
-            Text('Price: \$$coinPrice'),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/svg/bitcoin_logo.svg',
+                width: 128,
+                height: 128,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Bitcoin',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              ),
+              const SizedBox(height: 16),
+              Text('Price: \$$coinPrice'),
+            ],
+          ),
         ),
       ),
     );

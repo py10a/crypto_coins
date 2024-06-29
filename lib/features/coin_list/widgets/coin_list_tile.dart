@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CoinListTile extends StatelessWidget {
-  const CoinListTile({super.key});
+  const CoinListTile({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.prices,
+  });
 
-  final int index = 1000; // TODO: Replace with actual coin price
+  final String imageUrl;
+  final String name;
+  final Map<String, dynamic> prices;
+
+  String get subtitle {
+    final pricesInDifferentCurrencies =
+        prices.entries.map((e) => e.value['PRICE']).toList();
+    return pricesInDifferentCurrencies.join(' • ');
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: SvgPicture.asset(
-        'assets/svg/bitcoin_logo.svg',
-        width: 32,
-        height: 32,
-      ),
-      title: const Text(
-        'Bitcoin',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-      ),
-      subtitle: Text('Price: ${index.toString()}'),
+      leading: Image.network(imageUrl, width: 32, height: 32),
+      title: Text(name),
+      subtitle: Text(subtitle),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         Navigator.of(context).pushNamed(
           '/coin_detailed',
           arguments: {
-            'coin_name': 'Bitcoin', // TODO: Replace with actual coin name
-            'coin_price': index * 10, // TODO: Replace with actual coin price
+            'coin_name': name,
+            'coin_prices': prices,
           },
         );
       },

@@ -9,10 +9,23 @@ final darkTheme = ThemeData(
   ).colorScheme,
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromARGB(255, 227, 197, 29),
+    foregroundColor: Colors.black87,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        bottom: Radius.circular(32),
+      ),
+    ),
     titleTextStyle: TextStyle(
-      color: Colors.white,
+      color: Colors.black87,
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
     ),
+  ),
+  listTileTheme: const ListTileThemeData(
+    titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: Color.fromARGB(255, 227, 197, 29),
+    foregroundColor: Colors.black87,
   ),
 );
