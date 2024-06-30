@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Coin extends Equatable {
-  Coin({
+  const Coin({
     required this.imageUrl,
     required this.name,
     required this.prices,

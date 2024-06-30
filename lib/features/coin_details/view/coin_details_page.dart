@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'package:crypto_coins_app/repositories/coins/coins_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

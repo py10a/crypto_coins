@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:crypto_coins_app/features/coin_list/bloc/coin_list_bloc.dart';
 import 'package:crypto_coins_app/features/coin_list/widgets/widgets.dart';
 import 'package:crypto_coins_app/repositories/coins/abstract_coins_repository.dart';
-import 'package:crypto_coins_app/repositories/coins/models/models.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
