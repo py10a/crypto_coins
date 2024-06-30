@@ -33,6 +33,9 @@ class _CoinListPageState extends State<CoinListPage> {
         title: const Text('Your Coins'),
       ),
       body: RefreshIndicator(
+        displacement: 60,
+        edgeOffset: 0,
+        semanticsLabel: 'Pull to refresh',
         onRefresh: () async {
           final completer = Completer<void>();
           _bloc.add(CoinListFetch(completer: completer));
@@ -41,35 +44,36 @@ class _CoinListPageState extends State<CoinListPage> {
         child: BlocBuilder<CoinListBloc, CoinListState>(
           bloc: _bloc,
           builder: (context, state) {
+            // Loading state
             if (state is CoinListLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
+            // Loaded state
             if (state is CoinListLoaded) {
-              return Center(
-                child: Column(
-                  children: [
-                    const CoinSearchBar(),
-                    Expanded(
-                      child: ListView.separated(
-                        itemCount: state.coins.length,
-                        itemBuilder: (ctx, index) {
-                          final coin = state.coins[index];
-                          return CoinListTile(
-                            name: coin.name,
-                            prices: coin.prices,
-                            imageUrl: coin.imageUrl,
-                          );
-                        },
-                        separatorBuilder: (ctx, index) =>
-                            const Divider(height: 8, indent: 22),
-                      ),
+              return Column(
+                children: [
+                  const CoinSearchBar(),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: state.coins.length,
+                      itemBuilder: (ctx, index) {
+                        final coin = state.coins[index];
+                        return CoinListTile(
+                          name: coin.name,
+                          prices: coin.prices,
+                          imageUrl: coin.imageUrl,
+                        );
+                      },
+                      separatorBuilder: (ctx, index) =>
+                          const Divider(height: 8, indent: 22),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
+            // Error state
             if (state is CoinListError) {
               return Center(
                 child: Column(
@@ -86,6 +90,7 @@ class _CoinListPageState extends State<CoinListPage> {
                 ),
               );
             }
+            // Default case
             return const Center(
               child: Text('Error: default case'),
             );
