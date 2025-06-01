@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 // Modern color palette for Web3 app
 const Color kToxicGreen = Color(0xFF39FF14);
-const Color kAccentGreen = Color(0xFF00FFA3);
 const Color kDarkBackground = Color(0xFF121212);
 const Color kDarkSurface = Color(0xFF1E1E1E);
 const Color kErrorRed = Color(0xFFFF5555);
@@ -11,14 +10,14 @@ final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: const ColorScheme.dark(
     primary: kToxicGreen,
-    secondary: kAccentGreen,
+    secondary: kToxicGreen,
     // background is deprecated; using surface roles
     surface: kDarkSurface,
     error: kErrorRed,
   ),
   scaffoldBackgroundColor: kDarkBackground,
   appBarTheme: const AppBarTheme(
-    backgroundColor: kAccentGreen,
+    backgroundColor: kToxicGreen,
     foregroundColor: Colors.white,
     elevation: 2,
     shape: RoundedRectangleBorder(

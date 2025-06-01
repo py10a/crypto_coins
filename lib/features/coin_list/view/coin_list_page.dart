@@ -64,7 +64,8 @@ class _CoinListPageState extends State<CoinListPage> {
                       (ctx, index) {
                         final coin = state.coins[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 4),
                           child: CoinListTile(
                             name: coin.name,
                             prices: coin.prices,
@@ -75,7 +76,6 @@ class _CoinListPageState extends State<CoinListPage> {
                       childCount: state.coins.length,
                     ),
                   ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
                 ],
               );
             }
