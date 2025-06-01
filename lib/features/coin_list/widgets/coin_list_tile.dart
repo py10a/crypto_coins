@@ -27,7 +27,7 @@ class CoinListTile extends StatelessWidget {
       ),
       title: Text(name),
       subtitle: Text(subtitle),
-      trailing: const Icon(Icons.arrow_forward_ios),
+      trailing: Icon(Icons.adaptive.arrow_forward),
       onTap: () {
         Navigator.of(context).pushNamed(
           '/coin_detailed',

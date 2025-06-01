@@ -28,11 +28,8 @@ class _CoinListPageState extends State<CoinListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Your Coins'),
-      ),
-      body: RefreshIndicator(
+      // Use a RefreshIndicator with CustomScrollView
+      body: RefreshIndicator.adaptive(
         displacement: 60,
         edgeOffset: 0,
         semanticsLabel: 'Pull to refresh',
@@ -44,36 +41,44 @@ class _CoinListPageState extends State<CoinListPage> {
         child: BlocBuilder<CoinListBloc, CoinListState>(
           bloc: _bloc,
           builder: (context, state) {
-            // Loading state
             if (state is CoinListLoading) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator.adaptive(),
               );
             }
-            // Loaded state
             if (state is CoinListLoaded) {
-              return Column(
-                children: [
-                  const CoinSearchBar(),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: state.coins.length,
-                      itemBuilder: (ctx, index) {
-                        final coin = state.coins[index];
-                        return CoinListTile(
-                          name: coin.name,
-                          prices: coin.prices,
-                          imageUrl: coin.imageUrl,
-                        );
-                      },
-                      separatorBuilder: (ctx, index) =>
-                          const Divider(height: 8, indent: 22),
+              return CustomScrollView(
+                slivers: [
+                  const SliverAppBar(
+                    pinned: true,
+                    expandedHeight: 120,
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: Text('Your Coins'),
                     ),
                   ),
+                  const SliverToBoxAdapter(
+                    child: CoinSearchBar(),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (ctx, index) {
+                        final coin = state.coins[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: CoinListTile(
+                            name: coin.name,
+                            prices: coin.prices,
+                            imageUrl: coin.imageUrl,
+                          ),
+                        );
+                      },
+                      childCount: state.coins.length,
+                    ),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
                 ],
               );
             }
-            // Error state
             if (state is CoinListError) {
               return Center(
                 child: Column(
@@ -90,7 +95,6 @@ class _CoinListPageState extends State<CoinListPage> {
                 ),
               );
             }
-            // Default case
             return const Center(
               child: Text('Error: default case'),
             );
