@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CoinDetailsPage extends StatefulWidget {
   const CoinDetailsPage({super.key});
@@ -11,18 +10,18 @@ class CoinDetailsPage extends StatefulWidget {
 class _CoinDetailsPageState extends State<CoinDetailsPage> {
   String coinName = '';
   String coinPrice = '';
+  String coinImageUrl = '';
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final args = ModalRoute.of(context)!.settings.arguments;
 
-    // Check if the arguments are null or not a map
-    assert(args != null && args is Map, 'Arguments are null');
-
+    assert(args != null && args is Map);
     final coinMap = args as Map;
     coinName = coinMap['coin_name'];
     coinPrice = coinMap['coin_prices'].toString();
+    coinImageUrl = coinMap['coin_image_url'];
   }
 
   @override
@@ -37,15 +36,20 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/svg/bitcoin_logo.svg',
-                width: 128,
-                height: 128,
+              Hero(
+                tag: coinName,
+                child: Image.network(
+                  coinImageUrl,
+                  width: 128,
+                  height: 128,
+                  fit: BoxFit.contain,
+                ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Bitcoin',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              Text(
+                coinName,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 24.0),
               ),
               const SizedBox(height: 16),
               Text('Price: \$$coinPrice'),

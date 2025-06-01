@@ -15,8 +15,10 @@ class CoinListBloc extends Bloc<CoinListEvent, CoinListState> {
     on<CoinListFetch>(_load);
   }
 
+  /// The repository used to fetch the list of coins.
   AbstractCoinsRepository coinsRepository;
 
+  /// Loads the list of coins from the repository and emits the appropriate state.
   Future<void> _load(
     CoinListFetch event,
     Emitter<CoinListState> emit,
@@ -35,6 +37,7 @@ class CoinListBloc extends Bloc<CoinListEvent, CoinListState> {
     }
   }
 
+  /// Handles errors by logging them to the Talker service.
   @override
   void onError(Object error, StackTrace stackTrace) {
     super.onError(error, stackTrace);

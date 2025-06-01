@@ -21,7 +21,10 @@ class CoinListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(imageUrl, width: 32, height: 32),
+      leading: Hero(
+        tag: name,
+        child: Image.network(imageUrl, width: 32, height: 32),
+      ),
       title: Text(name),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.arrow_forward_ios),
@@ -31,6 +34,7 @@ class CoinListTile extends StatelessWidget {
           arguments: {
             'coin_name': name,
             'coin_prices': prices,
+            'coin_image_url': imageUrl,
           },
         );
       },
