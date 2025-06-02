@@ -11,8 +11,8 @@ class CryptoCoinsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Crypto Coins',
-      themeMode: ThemeMode.dark,
-      theme: darkTheme,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       initialRoute: '/coin_list',
       routes: routes,
       navigatorObservers: [TalkerRouteObserver(GetIt.I<Talker>())],
