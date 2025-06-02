@@ -41,6 +41,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   talker_flutter: ^4.3.2
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:

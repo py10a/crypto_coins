@@ -6,6 +6,7 @@ import 'package:crypto_coins_app/repositories/coins/abstract_coins_repository.da
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CoinListPage extends StatefulWidget {
   const CoinListPage({super.key});
@@ -49,11 +50,18 @@ class _CoinListPageState extends State<CoinListPage> {
             if (state is CoinListLoaded) {
               return CustomScrollView(
                 slivers: [
-                  const SliverAppBar(
+                  SliverAppBar(
                     pinned: true,
                     expandedHeight: 120,
                     flexibleSpace: FlexibleSpaceBar(
-                      title: Text('Your Coins'),
+                      title: Text(
+                        'Your Coins',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                   const SliverToBoxAdapter(

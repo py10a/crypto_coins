@@ -1,5 +1,6 @@
 import 'package:crypto_coins_app/theme/theme.dart'; // Assuming your theme colors are here
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CoinDetailsPage extends StatefulWidget {
   const CoinDetailsPage({super.key});
@@ -85,7 +86,14 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
             backgroundColor: colorScheme.surface,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Text(coinName, style: textTheme.titleLarge),
+              title: Text(
+                coinName,
+                style: GoogleFonts.montserrat(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+              ),
               background: Hero(
                 tag: coinName,
                 child: Image.network(
@@ -146,7 +154,7 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
                   color: colorScheme.surface,
                   elevation: 4,
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GridView(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -178,7 +186,7 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+
                 // You can add more cards or sections here, e.g., for charts
               ]),
             ),
@@ -197,8 +205,8 @@ class _CoinDetailsPageState extends State<CoinDetailsPage> {
       children: [
         Text(
           label,
-          style: textTheme.bodyMedium
-              ?.copyWith(color: textTheme.bodyMedium?.color?.withOpacity(0.7)),
+          style: textTheme.bodyMedium?.copyWith(
+              color: textTheme.bodyMedium?.color?.withValues(alpha: 0.7)),
           overflow: TextOverflow.ellipsis,
         ),
         Text(

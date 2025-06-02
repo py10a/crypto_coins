@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Modern color palette for Web3 app
 const Color kToxicGreen = Color(0xFF39FF14);
@@ -7,6 +8,22 @@ const Color kDarkSurface = Color(0xFF1E1E1E);
 const Color kErrorRed = Color(0xFFFF5555);
 
 final ThemeData darkTheme = ThemeData(
+  // Set Montserrat as the default font
+  fontFamily: GoogleFonts.montserrat().fontFamily,
+  textTheme:
+      GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme).copyWith(
+    // Light weight for body text
+    bodyLarge: GoogleFonts.montserrat(fontWeight: FontWeight.w300),
+    bodyMedium: GoogleFonts.montserrat(fontWeight: FontWeight.w300),
+    bodySmall: GoogleFonts.montserrat(fontWeight: FontWeight.w300),
+    // Bold weight for titles and headlines
+    titleLarge: GoogleFonts.montserrat(fontWeight: FontWeight.w700),
+    titleMedium: GoogleFonts.montserrat(fontWeight: FontWeight.w700),
+    headlineSmall: GoogleFonts.montserrat(fontWeight: FontWeight.w700),
+    headlineMedium: GoogleFonts.montserrat(fontWeight: FontWeight.w700),
+  ),
+  primaryTextTheme:
+      GoogleFonts.montserratTextTheme(ThemeData.dark().primaryTextTheme),
   brightness: Brightness.dark,
   colorScheme: const ColorScheme.dark(
     primary: kToxicGreen,
