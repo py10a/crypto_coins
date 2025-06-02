@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_coins_app/common/widgets/base_snackbar.dart';
 import 'package:crypto_coins_app/features/coin_list/bloc/coin_list_bloc.dart';
 import 'package:crypto_coins_app/features/coin_list/widgets/widgets.dart';
 import 'package:crypto_coins_app/repositories/coins/abstract_coins_repository.dart';
@@ -29,84 +30,97 @@ class _CoinListPageState extends State<CoinListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Use a RefreshIndicator with CustomScrollView
-      body: RefreshIndicator.adaptive(
-        displacement: 60,
-        edgeOffset: 0,
-        semanticsLabel: 'Pull to refresh',
-        onRefresh: () async {
-          final completer = Completer<void>();
-          _bloc.add(CoinListFetch(completer: completer));
-          return completer.future;
-        },
-        child: BlocBuilder<CoinListBloc, CoinListState>(
-          bloc: _bloc,
-          builder: (context, state) {
-            if (state is CoinListLoading) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
+      body: BlocListener<CoinListBloc, CoinListState>(
+        bloc: _bloc,
+        listener: (context, state) {
+          if (state is CoinListError) {
+            final String msg =
+                state.message as String; // Ensure message is a String
+            if (msg.contains('internet') || msg.contains('socket')) {
+              BaseSnackbar.showNoInternet(context);
+            } else {
+              BaseSnackbar.showError(context, msg);
             }
-            if (state is CoinListLoaded) {
-              return CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    expandedHeight: 120,
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: Text(
-                        'Your Coins',
-                        style: GoogleFonts.montserrat(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
+          }
+        },
+        child: RefreshIndicator.adaptive(
+          displacement: 60,
+          edgeOffset: 0,
+          semanticsLabel: 'Pull to refresh',
+          onRefresh: () async {
+            final completer = Completer<void>();
+            _bloc.add(CoinListFetch(completer: completer));
+            return completer.future;
+          },
+          child: BlocBuilder<CoinListBloc, CoinListState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is CoinListLoading) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+              if (state is CoinListLoaded) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 120,
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(
+                          'Your Coins',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: CoinSearchBar(),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (ctx, index) {
-                        final coin = state.coins[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 4),
-                          child: CoinListTile(
-                            name: coin.name,
-                            prices: coin.prices,
-                            imageUrl: coin.imageUrl,
-                          ),
-                        );
-                      },
-                      childCount: state.coins.length,
+                    const SliverToBoxAdapter(
+                      child: CoinSearchBar(),
                     ),
-                  ),
-                ],
-              );
-            }
-            if (state is CoinListError) {
-              return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      'Error',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 40),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (ctx, index) {
+                          final coin = state.coins[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 4),
+                            child: CoinListTile(
+                              name: coin.name,
+                              prices: coin.prices,
+                              imageUrl: coin.imageUrl,
+                            ),
+                          );
+                        },
+                        childCount: state.coins.length,
+                      ),
                     ),
-                    const SizedBox(height: 32),
-                    Text('${state.message}'),
                   ],
-                ),
+                );
+              }
+              if (state is CoinListError) {
+                return Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Error',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 40),
+                      ),
+                      const SizedBox(height: 32),
+                      Text('${state.message}'),
+                    ],
+                  ),
+                );
+              }
+              return const Center(
+                child: Text('Error: default case'),
               );
-            }
-            return const Center(
-              child: Text('Error: default case'),
-            );
-          },
+            },
+          ),
         ),
       ),
     );

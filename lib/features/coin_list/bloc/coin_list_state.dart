@@ -26,7 +26,8 @@ class CoinListLoaded extends CoinListState {
 /// Represents an error state in the CoinListBloc.
 class CoinListError extends CoinListState {
   CoinListError({this.message});
-  final Object? message;
+
+  late final Object? message;
 
   @override
   List<Object?> get props => [message];
