@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/86b14114-cf30-420e-a848-20d731c007c3)
+
+
 # Crypto Coins App
 
 A Flutter application to explore and view details of various cryptocurrencies right in your pocket.
